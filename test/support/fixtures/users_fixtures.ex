@@ -7,6 +7,7 @@ defmodule EmployeeRewardApp.UsersFixtures do
   @doc """
   Generate a user.
   """
+
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
