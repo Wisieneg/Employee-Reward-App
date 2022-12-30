@@ -46,7 +46,8 @@ config :logger, :console,
 
 config :employee_reward_app, :pow,
   user: EmployeeRewardApp.Users.User,
-  repo: EmployeeRewardApp.Repo
+  repo: EmployeeRewardApp.Repo,
+  web_module: EmployeeRewardAppWeb
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
