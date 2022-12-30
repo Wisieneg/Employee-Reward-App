@@ -6,8 +6,15 @@
     <strong>Amount:</strong>
     <%= @reward.amount %>
   </li>
+  <li>
+    <strong>From:</strong>
+    <%= @reward.from_id %>
+  </li>
+  <li>
+    <strong>To:</strong>
+    <%= @reward.to_id %>
+  </li>
 
 </ul>
 
-<span><%= link "Edit", to: Routes.reward_path(@conn, :edit, @reward) %></span> |
 <span><%= link "Back", to: Routes.reward_path(@conn, :index) %></span>

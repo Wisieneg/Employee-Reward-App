@@ -21,7 +21,7 @@ defmodule EmployeeRewardApp.Users.User do
 
   def update_changeset(user_or_changeset, attrs) do
     user_or_changeset
-    |> cast(attrs, [:role, :points, :username])
+    |> cast(attrs, [:points])
   end
 
   def changeset(user_or_changeset, attrs) do

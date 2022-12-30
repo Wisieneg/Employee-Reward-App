@@ -12,6 +12,8 @@
 <%= for reward <- @rewards do %>
     <tr>
       <td><%= reward.amount %></td>
+      <td><%= reward.from_id %></td>
+      <td><%= reward.to_id %></td>
 
       <td>
         <span><%= link "Show", to: Routes.reward_path(@conn, :show, reward) %></span>
