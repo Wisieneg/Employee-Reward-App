@@ -1,4 +1,5 @@
 defmodule EmployeeRewardAppWeb.Router do
+  alias EmployeeRewardAppWeb.RewardController
   use EmployeeRewardAppWeb, :router
   use Pow.Phoenix.Router
 
@@ -31,6 +32,7 @@ defmodule EmployeeRewardAppWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show]
+    resources "/rewards", RewardController, only: [:index, :show, :delete, :new, :create]
   end
 
   # Other scopes may use custom stacks.
