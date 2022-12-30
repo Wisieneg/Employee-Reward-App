@@ -4,6 +4,7 @@ defmodule EmployeeRewardApp.Repo.Migrations.CreateUsers do
   def change do
     create table(:users) do
       add :username, :string, null: false
+      add :name, :string, null: false
       add :role, :string, null: false, default: "user"
       add :points, :integer, default: 50
       add :email, :string, null: false

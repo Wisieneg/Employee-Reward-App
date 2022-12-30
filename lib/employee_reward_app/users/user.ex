@@ -5,6 +5,7 @@ defmodule EmployeeRewardApp.Users.User do
 
   schema "users" do
     field :username, :string
+    field :name, :string
     field :role, :string
     field :points, :integer
 
@@ -17,8 +18,8 @@ defmodule EmployeeRewardApp.Users.User do
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> pow_changeset(attrs)
-    |> cast(attrs, [:username])
-    |> validate_required(:username)
+    |> cast(attrs, [:username, :name])
+    |> validate_required([:username, :name])
     |> validate_length(:username, min: 3, max: 40)
   end
 

@@ -11,6 +11,10 @@
   <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset) %>
   <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
 
+  <%= label f, :name %>
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
+
   <%= label f, :username %>
   <%= text_input f, :username %>
   <%= error_tag f, :username %>
