@@ -4,13 +4,13 @@ defmodule EmployeeRewardApp.Repo.Migrations.CreateRewards do
   def change do
     create table(:rewards) do
       add :amount, :integer
-      add :from, references(:users, on_delete: :delete_all)
-      add :to, references(:users, on_delete: :delete_all)
+      add :from_id, references(:users, on_delete: :delete_all)
+      add :to_id, references(:users, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create index(:rewards, [:from])
-    create index(:rewards, [:to])
+    create index(:rewards, [:from_id])
+    create index(:rewards, [:to_id])
   end
 end
