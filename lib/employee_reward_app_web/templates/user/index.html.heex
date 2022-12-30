@@ -1,0 +1,23 @@
+<h1>Listing Users</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+    <tr>
+      <td>
+        <span> <%= user.username %> </span>
+      </td>
+
+      <td>
+        <span><%= link "Show", to: Routes.user_path(@conn, :show, user) %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
