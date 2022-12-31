@@ -11,30 +11,33 @@ defmodule EmployeeRewardAppWeb.RewardController do
   end
 
   def new(conn, %{"id" => id}) do
-    case conn.assigns.current_user.id == String.to_integer(id) do
-      true ->
+    case {Users.get_user(id), conn.assigns.current_user.id == String.to_integer(id)} do
+      {nil, _} ->
         conn
-        |> put_flash(:info, "You cannot give reward to yourself!")
+        |> put_flash(:error, "The user with given id doesn't exist")
         |> redirect(to: Routes.user_path(conn, :index))
-      false ->
-        changeset = Rewards.change_reward(%Reward{to_id: id})
+      {_, true} ->
+        conn
+        |> put_flash(:error, "You cannot give reward to yourself!")
+        |> redirect(to: Routes.user_path(conn, :index))
+      {_, false} ->
+        changeset = Rewards.change_reward(%Reward{})
         render(conn, "new.html", changeset: changeset, to_id: id)
     end
   end
 
   def create(conn, %{"to_id" => to_id, "reward" => reward_params}) do
-    from_user = conn.assigns.current_user
+    from_user = Users.get_user!(conn.assigns.current_user.id)
     to_user = Users.get_user!(to_id)
 
     case Rewards.create_reward(from_user, to_user, reward_params) do
-      {:ok, reward} ->
-
+      {:ok, _} ->
         %{"amount" => points} = reward_params
-        Users.update_user(from_user, %{points: from_user.points-String.to_integer(points)})
+        Users.update_fields(from_user, %{points: from_user.points-String.to_integer(points)})
 
         conn
         |> put_flash(:info, "Reward created successfully.")
-        |> redirect(to: Routes.reward_path(conn, :show, reward))
+        |> redirect(to: Routes.user_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn

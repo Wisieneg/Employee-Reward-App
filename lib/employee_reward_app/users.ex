@@ -4,6 +4,7 @@ defmodule EmployeeRewardApp.Users do
   """
 
   import Ecto.Query, warn: false
+import Ecto.Changeset
   alias EmployeeRewardApp.Repo
 
   alias EmployeeRewardApp.Users.User
@@ -37,6 +38,7 @@ defmodule EmployeeRewardApp.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user(id), do: Repo.get(User, id)
   @doc """
   Creates a user.
 
@@ -69,6 +71,12 @@ defmodule EmployeeRewardApp.Users do
   """
   def update_user(%User{} = user, attrs) do
     user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_fields(%User{} = user, attrs) do
+    user
     |> User.update_changeset(attrs)
     |> Repo.update()
   end
@@ -100,5 +108,14 @@ defmodule EmployeeRewardApp.Users do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+
+  def grant_monthly_points() do
+    %{day: day} = Timex.now(Timex.Timezone.Local.lookup)
+    case day do
+      1 -> Repo.update_all(from(m in User, where: m.role == "user", update: [set: [points: 50]]),[])
+      _ -> :ok
+    end
   end
 end

@@ -4,7 +4,10 @@ defmodule EmployeeRewardApp.Rewards do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Changeset
+
   alias EmployeeRewardApp.Repo
+  alias EmployeeRewardApp.Users.User
 
   alias EmployeeRewardApp.Rewards.Reward
 
@@ -49,9 +52,12 @@ defmodule EmployeeRewardApp.Rewards do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_reward(attrs \\ %{}) do
+  def create_reward(%User{}=from_user, %User{}=to_user, attrs \\ %{}) do
     %Reward{}
     |> Reward.changeset(attrs)
+    |> put_assoc(:from_user, from_user)
+    |> put_assoc(:to_user, to_user)
+    |> validate_number(:amount, greater_than: 0, less_than_or_equal_to: from_user.points)
     |> Repo.insert()
   end
 
