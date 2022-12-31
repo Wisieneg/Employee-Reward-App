@@ -2,6 +2,9 @@ defmodule EmployeeRewardAppWeb.Router do
   use EmployeeRewardAppWeb, :router
   use Pow.Phoenix.Router
 
+  #alias EmployeeRewardAppWeb.UserController
+  #alias EmployeeRewardAppWeb.RewardController
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -30,19 +33,21 @@ defmodule EmployeeRewardAppWeb.Router do
     pow_routes()
   end
 
-  scope "/admin", EmployeeRewardAppWeb, as: :admin do
-    pipe_through [:browser, :protected, :admin]
-
-    get "/", AdminController, :index
-  end
-
   scope "/", EmployeeRewardAppWeb do
     pipe_through [:browser, :protected]
 
     get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show]
     get "/rewards/new/:id", RewardController, :new
-    resources "/rewards", RewardController, only: [:index, :show, :delete, :create]
+
+    resources "/users", UserController, only: [:index, :show]
+    resources "/rewards", RewardController, only: [:create]
+  end
+
+  scope "/admin", EmployeeRewardAppWeb.Admin, as: :admin do
+    pipe_through [:browser, :protected, :admin]
+
+    resources "/rewards", RewardController, only: [:index, :show, :delete]
+    resources "/users", UserController, only: [:index, :show, :delete, :edit, :update]
   end
 
   # Other scopes may use custom stacks.

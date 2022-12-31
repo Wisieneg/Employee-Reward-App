@@ -1,4 +1,4 @@
-defmodule EmployeeRewardAppWeb.AdminController do
+defmodule EmployeeRewardAppWeb.Admin.AdminController do
   use EmployeeRewardAppWeb, :controller
 
   alias EmployeeRewardApp.Users
