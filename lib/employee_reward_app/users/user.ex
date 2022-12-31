@@ -27,7 +27,7 @@ defmodule EmployeeRewardApp.Users.User do
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> pow_changeset(attrs)
-    |> cast(attrs, [:username, :name])
+    |> cast(attrs, [:username, :name, :role])
     |> validate_required([:username, :name])
     |> validate_length(:username, min: 3, max: 40)
     |> unique_constraint(:username)

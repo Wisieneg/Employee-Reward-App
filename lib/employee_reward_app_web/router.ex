@@ -1,5 +1,4 @@
 defmodule EmployeeRewardAppWeb.Router do
-  alias EmployeeRewardAppWeb.RewardController
   use EmployeeRewardAppWeb, :router
   use Pow.Phoenix.Router
 
@@ -21,10 +20,20 @@ defmodule EmployeeRewardAppWeb.Router do
       error_handler: Pow.Phoenix.PlugErrorHandler
   end
 
+  pipeline :admin do
+    plug EmployeeRewardAppWeb.RoleGuardPlug, :admin
+  end
+
   scope "/" do
     pipe_through :browser
 
     pow_routes()
+  end
+
+  scope "/admin", EmployeeRewardAppWeb, as: :admin do
+    pipe_through [:browser, :protected, :admin]
+
+    get "/", AdminController, :index
   end
 
   scope "/", EmployeeRewardAppWeb do
@@ -32,7 +41,8 @@ defmodule EmployeeRewardAppWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show]
-    resources "/rewards", RewardController, only: [:index, :show, :delete, :new, :create]
+    get "/rewards/new/:id", RewardController, :new
+    resources "/rewards", RewardController, only: [:index, :show, :delete, :create]
   end
 
   # Other scopes may use custom stacks.
