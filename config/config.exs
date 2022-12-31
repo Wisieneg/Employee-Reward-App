@@ -44,13 +44,24 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+
 config :employee_reward_app, :pow,
   user: EmployeeRewardApp.Users.User,
   repo: EmployeeRewardApp.Repo,
   web_module: EmployeeRewardAppWeb
 
+config :employee_reward_app, EmployeeRewardApp.Scheduler,
+  timezone: "Europe/Warsaw",
+  jobs: [
+    # Triggered every day at midnight
+    {"@daily",   fn -> EmployeeRewardApp.Users.grant_monthly_points() end},
+  ]
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+config :logger, level: :debug
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

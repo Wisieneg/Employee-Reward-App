@@ -15,9 +15,11 @@ defmodule EmployeeRewardApp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: EmployeeRewardApp.PubSub},
       # Start the Endpoint (http/https)
-      EmployeeRewardAppWeb.Endpoint
+      EmployeeRewardAppWeb.Endpoint,
+
       # Start a worker by calling: EmployeeRewardApp.Worker.start_link(arg)
       # {EmployeeRewardApp.Worker, arg}
+      EmployeeRewardApp.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
