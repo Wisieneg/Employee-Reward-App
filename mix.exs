@@ -49,7 +49,10 @@ defmodule EmployeeRewardApp.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:pow, "~> 1.0.27"}
+      {:pow, "~> 1.0.27"},
+      {:quantum, "~> 3.5.0"},
+      {:timex, "~> 3.7.9"},
+      {:tzdata, "~> 1.1"}
     ]
   end
 
