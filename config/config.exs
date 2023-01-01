@@ -24,10 +24,14 @@ config :employee_reward_app, EmployeeRewardAppWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :employee_reward_app, EmployeeRewardApp.Mailer, adapter: Swoosh.Adapters.Local
+config :employee_reward_app, EmployeeRewardApp.Mailer,
+  adapter: Swoosh.Adapters.Mailgun,
+  base_url: "https://api.mailgun.net/v3",
+  api_key: System.get_env("MAILGUN_KEY"),
+  domain: System.get_env("MAILGUN_DOM")
 
 # Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
+config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 
 # Configure esbuild (the version is required)
 config :esbuild,

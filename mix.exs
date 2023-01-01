@@ -52,7 +52,8 @@ defmodule EmployeeRewardApp.MixProject do
       {:pow, "~> 1.0.27"},
       {:quantum, "~> 3.5.0"},
       {:timex, "~> 3.7.9"},
-      {:tzdata, "~> 1.1"}
+      {:tzdata, "~> 1.1"},
+      {:hackney, "~> 1.18"}
     ]
   end
 
