@@ -59,4 +59,18 @@ defmodule EmployeeRewardAppWeb.RewardController do
     |> put_flash(:info, "Reward deleted successfully.")
     |> redirect(to: Routes.reward_path(conn, :index))
   end
+
+  def given(conn, _params) do
+    rewards = Rewards.get_given_rewards(conn.assigns.current_user.id)
+    conn
+    |> render("given.html", rewards: rewards)
+  end
+
+
+  def received(conn, _params) do
+    rewards = Rewards.get_received_rewards(conn.assigns.current_user.id)
+    conn
+    |> render("received.html", rewards: rewards)
+  end
+
 end
