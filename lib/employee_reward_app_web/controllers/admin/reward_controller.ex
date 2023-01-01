@@ -57,6 +57,6 @@ defmodule EmployeeRewardAppWeb.Admin.RewardController do
 
     conn
     |> put_flash(:info, "Reward deleted successfully.")
-    |> redirect(to: Routes.reward_path(conn, :index))
+    |> redirect(to: Routes.admin_reward_path(conn, :index))
   end
 end

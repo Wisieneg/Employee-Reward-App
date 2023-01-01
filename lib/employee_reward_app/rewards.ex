@@ -21,7 +21,11 @@ defmodule EmployeeRewardApp.Rewards do
 
   """
   def list_rewards do
-    Repo.all(Reward)
+    Repo.all(
+      from r in Reward,
+        join: from_user in assoc(r, :from_user),
+        preload: [:from_user, :to_user]
+    )
   end
 
   @doc """
@@ -38,7 +42,10 @@ defmodule EmployeeRewardApp.Rewards do
       ** (Ecto.NoResultsError)
 
   """
-  def get_reward!(id), do: Repo.get!(Reward, id)
+  def get_reward!(id) do
+    Repo.get!(Reward, id)
+    |> Repo.preload([:from_user, :to_user])
+  end
 
 
   def get_given_rewards(user_id) do
@@ -46,7 +53,7 @@ defmodule EmployeeRewardApp.Rewards do
       from r in Reward,
         join: to_user in assoc(r, :to_user),
         where: r.from_id == ^user_id,
-        preload: [to_user: to_user]
+        preload: [:to_user]
     )
   end
 
@@ -55,7 +62,7 @@ defmodule EmployeeRewardApp.Rewards do
       from r in Reward,
         join: from_user in assoc(r, :from_user),
         where: r.to_id == ^user_id,
-        preload: [from_user: from_user]
+        preload: [:from_user]
     )
   end
 
