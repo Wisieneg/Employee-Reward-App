@@ -27,8 +27,8 @@ config :employee_reward_app, EmployeeRewardAppWeb.Endpoint,
 config :employee_reward_app, EmployeeRewardApp.Mailer,
   adapter: Swoosh.Adapters.Mailgun,
   base_url: "https://api.mailgun.net/v3",
-  api_key: System.get_env("MAILGUN_KEY"),
-  domain: System.get_env("MAILGUN_DOM")
+  api_key: System.get_env("MAILGUN_API_KEY"),
+  domain: System.get_env("MAILGUN_DOMAIN")
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, Swoosh.ApiClient.Hackney

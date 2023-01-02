@@ -4,6 +4,7 @@ defmodule EmployeeRewardAppWeb.RewardController do
   alias EmployeeRewardApp.Rewards
   alias EmployeeRewardApp.Rewards.Reward
   alias EmployeeRewardApp.Users
+  alias EmployeeRewardApp.UserMail
 
   def index(conn, _params) do
     rewards = Rewards.list_rewards()
@@ -31,9 +32,12 @@ defmodule EmployeeRewardAppWeb.RewardController do
     to_user = Users.get_user!(to_id)
 
     case Rewards.create_reward(from_user, to_user, reward_params) do
-      {:ok, _} ->
+      {:ok, reward} ->
         %{"amount" => points} = reward_params
         Users.update_fields(from_user, %{points: from_user.points-String.to_integer(points)})
+
+        message = UserMail.reward_notification(reward)
+        UserMail.send_notification(to_user, message)
 
         conn
         |> put_flash(:info, "Reward created successfully.")

@@ -47,6 +47,7 @@ defmodule EmployeeRewardApp.Rewards do
     |> Repo.preload([:from_user, :to_user])
   end
 
+  def get_reward(id), do: Repo.get(Reward, id)
 
   def get_given_rewards(user_id) do
     Repo.all(
