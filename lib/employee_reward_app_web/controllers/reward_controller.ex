@@ -6,10 +6,6 @@ defmodule EmployeeRewardAppWeb.RewardController do
   alias EmployeeRewardApp.Users
   alias EmployeeRewardApp.UserMail
 
-  def index(conn, _params) do
-    rewards = Rewards.list_rewards()
-    render(conn, "index.html", rewards: rewards)
-  end
 
   def new(conn, %{"id" => id}) do
     case {Users.get_user(id), conn.assigns.current_user.id == String.to_integer(id)} do
@@ -49,30 +45,18 @@ defmodule EmployeeRewardAppWeb.RewardController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    reward = Rewards.get_reward!(id)
-    render(conn, "show.html", reward: reward)
-  end
-
-
-  def delete(conn, %{"id" => id}) do
-    reward = Rewards.get_reward!(id)
-    {:ok, _reward} = Rewards.delete_reward(reward)
-
-    conn
-    |> put_flash(:info, "Reward deleted successfully.")
-    |> redirect(to: Routes.reward_path(conn, :index))
-  end
-
   def given(conn, _params) do
     rewards = Rewards.get_given_rewards(conn.assigns.current_user.id)
+    |> Enum.sort(& NaiveDateTime.compare(&1.inserted_at, &2.inserted_at) != :lt)
+
     conn
     |> render("given.html", rewards: rewards)
   end
 
-
   def received(conn, _params) do
     rewards = Rewards.get_received_rewards(conn.assigns.current_user.id)
+    |> Enum.sort(& NaiveDateTime.compare(&1.inserted_at, &2.inserted_at) != :lt)
+
     conn
     |> render("received.html", rewards: rewards)
   end
