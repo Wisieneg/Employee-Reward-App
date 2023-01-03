@@ -5,29 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "EmployeeRewardApp", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "EmployeeRewardApp" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
   </head>
+  <style>
+    .navbar-brand{
+      font-size: 40px;
+    }
+    .dropdown-item{
+      font-size: 15px;
+      width: 100%;
+    }
+
+    .dropdown-menu{
+      width: 100%;
+    }
+
+    .nav-item {
+      margin-left: 10px;
+    }
+
+    .nav-link {
+      font-size: 20px;
+    }
+
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #bdc3c7;
+    }
+  </style>
   <body>
-    <header>
-      <section class="container">
-        <nav>
-          <ul>
-            <%= if Pow.Plug.current_user(@conn) do %>
-              <li> Hello, <%= first_name(@current_user) %> </li>
-              <li> <%= link "Sign Out", to: Routes.pow_session_path(@conn, :delete), method: :delete %> </li>
-            <% else %>
-              <li> <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %> </li>
-              <li> <%= link "Sign In", to: Routes.pow_session_path(@conn, :new) %> </li>
+    <%= if Pow.Plug.current_user(@conn) do %>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <h1 class="navbar-brand">EmployeeRewardApp</h1>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5">
+            <li class="nav-item active">
+              <%= link "Users", to: Routes.user_path(@conn, :index), class: "nav-link" %>
+            </li>
+            <li class="nav-item active dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                My Rewards
+              </a>
+              <ul class="dropdown-menu">
+                <%= link "Given", to: Routes.reward_path(@conn, :given), class: "dropdown-item" %>
+                <%= link "Received", to: Routes.reward_path(@conn, :received), class: "dropdown-item" %>
+              </ul>
+            </li>
+            <%= if is_admin?(@current_user) do %>
+            <li class="nav-item active dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin Panel
+              </a>
+              <ul class="dropdown-menu">
+                <%= link "Users", to: Routes.admin_user_path(@conn, :index), class: "dropdown-item" %>
+                <%= link "Rewards", to: Routes.admin_reward_path(@conn, :index), class: "dropdown-item" %>
+                <%= link "Summaries", to: Routes.admin_reward_path(@conn, :summary), class: "dropdown-item" %>
+              </ul>
+            </li>
             <% end %>
           </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 px-5">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= @current_user.username %>
+              </a>
+              <ul class="dropdown-menu">
+                <%= link "My Account", to: Routes.user_path(@conn, :show, @current_user.id), class: "dropdown-item" %>
+                <%= link "Sign Out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "dropdown-item" %>
+              </ul>
+            </li>
+          </ul>
+      </div>
+    </nav>
+    <% end %>
     <%= @inner_content %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
 </html>
