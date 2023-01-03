@@ -1,9 +1,13 @@
 defmodule EmployeeRewardAppWeb.UserView do
   use EmployeeRewardAppWeb, :view
 
-  def first_name(user) do
-    user.name
-    |> String.split()
-    |> Enum.at(0)
+
+  def is_admin?(user) do
+    user.role == "admin"
+  end
+
+  def get_user_points(user) do
+    %{points: points} = Users.get_user!(user.id)
+    points
   end
 end
