@@ -2,7 +2,6 @@ defmodule EmployeeRewardAppWeb.UserController do
   use EmployeeRewardAppWeb, :controller
 
   alias EmployeeRewardApp.Users
-  alias EmployeeRewardApp.Users.User
 
   def index(conn, _params) do
     users = Users.list_users()

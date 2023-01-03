@@ -6,9 +6,8 @@ defmodule EmployeeRewardApp.Users do
   use Timex
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset
-  alias EmployeeRewardApp.Repo
 
+  alias EmployeeRewardApp.Repo
   alias EmployeeRewardApp.Users.User
 
   @doc """

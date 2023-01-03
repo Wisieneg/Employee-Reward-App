@@ -1,6 +1,7 @@
 defmodule EmployeeRewardAppWeb.UserView do
   use EmployeeRewardAppWeb, :view
 
+  alias EmployeeRewardApp.Users
 
   def is_admin?(user) do
     user.role == "admin"
@@ -10,4 +11,5 @@ defmodule EmployeeRewardAppWeb.UserView do
     %{points: points} = Users.get_user!(user.id)
     points
   end
+
 end

@@ -1,13 +1,8 @@
 defmodule EmployeeRewardAppWeb.Admin.AdminController do
   use EmployeeRewardAppWeb, :controller
 
-  alias EmployeeRewardApp.Users
-  alias EmployeeRewardApp.Users.User
-  alias EmployeeRewardApp.Rewards
-
   def index(conn, _params) do
-    rewards = Rewards.list_rewards()
-    render(conn, "index.html", rewards: rewards)
+    redirect(conn, to: Routes.admin_user_path(conn, :index))
   end
 
 end
