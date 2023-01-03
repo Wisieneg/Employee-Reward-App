@@ -75,7 +75,6 @@
                 <%= @current_user.username %>
               </a>
               <ul class="dropdown-menu">
-                <%= link "My Account", to: Routes.user_path(@conn, :show, @current_user.id), class: "dropdown-item" %>
                 <%= link "Sign Out", to: Routes.pow_session_path(@conn, :delete), method: :delete, class: "dropdown-item" %>
               </ul>
             </li>

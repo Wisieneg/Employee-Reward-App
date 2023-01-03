@@ -33,7 +33,7 @@ defmodule EmployeeRewardAppWeb.Router do
     pipe_through [:browser, :protected]
 
     get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show]
+    get "/users", UserController, :index
 
     resources "/rewards", RewardController, only: [:create]
     get "/rewards/given", RewardController, :given
