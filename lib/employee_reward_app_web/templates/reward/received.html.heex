@@ -1,0 +1,18 @@
+<table class="table table-fixed mt-5">
+  <thead>
+    <tr class="justify-content-center">
+      <th class="col-xl-4">From</th>
+      <th class="col-xl-4">Amount</th>
+      <th class="col-xl-4">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for reward <- @rewards do %>
+    <tr class="justify-content-center">
+      <td class="col-xl-4"> <%= reward.from_user.username %> </td>
+      <td class="col-xl-4"> <%= reward.amount %> </td>
+      <td class="col-xl-4"> <%= format_datetime(reward.inserted_at) %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
