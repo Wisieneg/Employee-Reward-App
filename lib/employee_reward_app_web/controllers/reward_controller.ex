@@ -33,10 +33,11 @@ defmodule EmployeeRewardAppWeb.RewardController do
         Users.update_fields(from_user, %{points: from_user.points-String.to_integer(points)})
 
         message = UserMail.reward_notification(reward)
-        UserMail.send_notification(to_user, message)
+        IO.puts "SENDING MAIL"
+        {:ok, %{}} = UserMail.send_notification(to_user, message)
 
         conn
-        |> put_flash(:info, "Reward created successfully.")
+        |> put_flash(:info, "You succesfully rewarded #{to_user.username}")
         |> redirect(to: Routes.user_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
