@@ -122,7 +122,9 @@ defmodule EmployeeRewardApp.Users do
         group_by: u.id,
         select: %{user: u, summary: sum(r.amount)},
         where: r.inserted_at >= ^start_date and r.inserted_at <= ^end_date
-      )
+    )
+    # Descending sort by sum of rewards
+    |> Enum.sort(fn(a,b) -> a.summary - b.summary >= 0 end)
   end
 
 
