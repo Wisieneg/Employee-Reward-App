@@ -3,8 +3,10 @@ defmodule EmployeeRewardApp.Users do
   The Users context.
   """
 
+  use Timex
+
   import Ecto.Query, warn: false
-import Ecto.Changeset
+  import Ecto.Changeset
   alias EmployeeRewardApp.Repo
 
   alias EmployeeRewardApp.Users.User
@@ -108,6 +110,20 @@ import Ecto.Changeset
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+
+  def rewards_summary(month) do
+    start_date = Timex.parse!(month, "{YYYY}-{0M}")
+    {:ok, end_date} = Date.end_of_month(start_date) |> NaiveDateTime.new(~T[23:59:59])
+
+    Repo.all(
+      from u in User,
+        join: r in assoc(u, :given_to),
+        group_by: u.id,
+        select: %{user: u, summary: sum(r.amount)},
+        where: r.inserted_at >= ^start_date and r.inserted_at <= ^end_date
+      )
   end
 
 

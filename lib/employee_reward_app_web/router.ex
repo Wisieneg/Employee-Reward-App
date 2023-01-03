@@ -48,6 +48,7 @@ defmodule EmployeeRewardAppWeb.Router do
   scope "/admin", EmployeeRewardAppWeb.Admin, as: :admin do
     pipe_through [:browser, :protected, :admin]
 
+    get "/rewards/summary", RewardController, :summary
     resources "/rewards", RewardController, only: [:index, :show, :delete]
     resources "/users", UserController, only: [:index, :show, :delete, :edit, :update]
   end
