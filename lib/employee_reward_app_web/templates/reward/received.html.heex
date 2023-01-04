@@ -1,3 +1,12 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="p-3 py-5 justify-content-center">
+        <div class="display-2">Received Rewards</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
 <table class="table table-fixed mt-5">
   <thead>
     <tr class="justify-content-center">
@@ -8,7 +17,7 @@
   </thead>
   <tbody>
     <%= for reward <- @rewards do %>
-    <tr class="justify-content-center">
+    <tr>
       <td class="col-xl-4"> <%= reward.from_user.username %> </td>
       <td class="col-xl-4"> <%= reward.amount %> </td>
       <td class="col-xl-4"> <%= format_datetime(reward.inserted_at) %> </td>
@@ -16,3 +25,5 @@
     <% end %>
   </tbody>
 </table>
+  </div>
+</div>
