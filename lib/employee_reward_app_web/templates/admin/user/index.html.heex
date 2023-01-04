@@ -1,0 +1,31 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="p-3 py-5 justify-content-center">
+        <div class="display-2">Users</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-fixed mt-5">
+      <thead>
+        <tr>
+          <th class="col-xl-4">Name</th>
+          <th class="col-xl-4">Username</th>
+          <th class="col-xl-2"></th>
+          <th class="col-xl-2"> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for user <- @users do %>
+        <tr>
+          <td class="col-xl-4"> <%= user.name %> </td>
+          <td class="col-xl-4"> <%= user.username %> </td>
+          <td class="col-xl-2"> <%= link "Edit", to: Routes.admin_user_path(@conn, :edit, user.id), class: "btn btn-secondary px-5" %> </td>
+          <td class="col-xl-2"> <%= link "Delete", to: Routes.admin_user_path(@conn, :delete, user.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-secondary px-5" %> </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
