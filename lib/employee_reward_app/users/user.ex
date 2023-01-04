@@ -22,6 +22,7 @@ defmodule EmployeeRewardApp.Users.User do
   def update_changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> cast(attrs, [:points, :role])
+    |> validate_number(:points, greater_than_or_equal_to: 0)
   end
 
   def changeset(user_or_changeset, attrs) do
