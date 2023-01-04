@@ -17,9 +17,9 @@ defmodule EmployeeRewardAppWeb.RewardController do
         conn
         |> put_flash(:error, "You cannot give reward to yourself!")
         |> redirect(to: Routes.user_path(conn, :index))
-      {_, false} ->
+      {user, false} ->
         changeset = Rewards.change_reward(%Reward{})
-        render(conn, "new.html", changeset: changeset, to_id: id)
+        render(conn, "new.html", changeset: changeset, user: user)
     end
   end
 
@@ -33,7 +33,6 @@ defmodule EmployeeRewardAppWeb.RewardController do
         Users.update_fields(from_user, %{points: from_user.points-String.to_integer(points)})
 
         message = UserMail.reward_notification(reward)
-        IO.puts "SENDING MAIL"
         {:ok, %{}} = UserMail.send_notification(to_user, message)
 
         conn
@@ -42,7 +41,7 @@ defmodule EmployeeRewardAppWeb.RewardController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
-        |> render("new.html", changeset: changeset, to_id: to_id)
+        |> render("new.html", changeset: changeset, user: to_user)
     end
   end
 

@@ -46,8 +46,8 @@ defmodule EmployeeRewardAppWeb.Router do
 
     get "/", AdminController, :index
     get "/rewards/summary", RewardController, :summary
-    resources "/rewards", RewardController, only: [:index, :show, :delete]
-    resources "/users", UserController, only: [:index, :show, :delete, :edit, :update]
+    resources "/rewards", RewardController, only: [:index, :delete]
+    resources "/users", UserController, only: [:index, :delete, :edit, :update]
   end
 
   # Other scopes may use custom stacks.
