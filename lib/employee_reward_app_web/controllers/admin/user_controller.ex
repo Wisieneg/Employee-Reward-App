@@ -17,7 +17,6 @@ defmodule EmployeeRewardAppWeb.Admin.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    IO.inspect id
     user = Users.get_user!(id)
     changeset = User.update_changeset(user, %{})
     render(conn, "edit.html", changeset: changeset, user: user)
@@ -32,7 +31,7 @@ defmodule EmployeeRewardAppWeb.Admin.UserController do
         |> redirect(to: Routes.admin_user_path(conn, :index))
 
       {:error, changeset} ->
-        render(conn, "assign.html", changeset: changeset)
+        render(conn, "edit.html", changeset: changeset, user: user)
     end
   end
 
