@@ -15,7 +15,7 @@ defmodule EmployeeRewardAppWeb.UserControllerTest do
     test "lists all users", %{conn: conn} do
       conn = get_conn_user(conn)
       conn = get(conn, Routes.user_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Users"
+      assert html_response(conn, 200) =~ conn.assigns.current_user.name
     end
   end
 
@@ -33,7 +33,7 @@ defmodule EmployeeRewardAppWeb.UserControllerTest do
       assert redirected_to(conn) == Routes.page_path(conn, :index)
 
       conn = get(conn, Routes.user_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Users"
+      assert html_response(conn, 200) =~ @create_attrs.username
     end
 
     test "renders errors when data is invalid", %{conn: conn} do

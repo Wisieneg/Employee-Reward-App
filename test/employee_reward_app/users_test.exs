@@ -10,6 +10,7 @@ defmodule EmployeeRewardApp.UsersTest do
 
     @create_attrs %{name: "Wojciech Wiśniewski", email: "wwisniewski@example.com", username: "wisieneg", password: "testpassword", password_confirmation: "testpassword"}
     @update_attrs %{name: "Wojciech Piotr Wiśniewski", username: "wisieneg2",current_password: "testpassword"}
+    @invalid_update_attrs %{name: "Wojciech Piotr Wiśniewski", username: "wi",current_password: "testpasswo"}
     @invalid_attrs %{name: "Wojciech Wiśniewski", email: "wwisniewski@example.com", username: "wi", password: "testsword", password_confirmation: "testpassword"}
 
     test "list_users/0 returns all users" do
@@ -24,6 +25,7 @@ defmodule EmployeeRewardApp.UsersTest do
       user = user_fixture(@create_attrs)
       changeset = User.update_changeset(user, %{points: 50, role: "user"})
       user = Ecto.Changeset.apply_changes(changeset)
+
       assert Users.get_user!(user.id) == user
     end
 
@@ -48,7 +50,7 @@ defmodule EmployeeRewardApp.UsersTest do
       user = user_fixture(@create_attrs)
       changeset = User.update_changeset(user, %{points: 50, role: "user"})
       user = Ecto.Changeset.apply_changes(changeset)
-      assert {:error, %Ecto.Changeset{}} = Users.update_user(user, @invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Users.update_user(user, @invalid_update_attrs)
       assert user == Users.get_user!(user.id)
     end
 

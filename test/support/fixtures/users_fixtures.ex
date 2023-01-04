@@ -11,11 +11,9 @@ defmodule EmployeeRewardApp.UsersFixtures do
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> EmployeeRewardApp.Users.create_user()
 
-    user
+    EmployeeRewardApp.Users.get_user!(user.id)
   end
 end
