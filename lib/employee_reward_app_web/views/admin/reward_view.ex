@@ -13,7 +13,7 @@ defmodule EmployeeRewardAppWeb.Admin.RewardView do
   def format_time(date_time), do: "#{Time.to_string(date_time)}"
 
   def format_datetime(date_time) do
-    {:ok, formatted} = Timex.format(date_time, "%H:%M %d/%m/%y", :strftime)
+    {:ok, formatted} = Timex.format(date_time, "%d/%m/%Y, %H:%M", :strftime)
     formatted
   end
 

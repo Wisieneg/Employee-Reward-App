@@ -1,0 +1,55 @@
+
+<script type="text/javascript">
+  $(function () {
+    $("#datepicker").change(function () {
+      $("#myform").submit();
+    });
+  });
+</script>
+
+<div class="col-md-12">
+  <div class="row text-center">
+    <div class="col-md-12 text-center">
+      <div class="p-3 py-5 justify-content-center">
+        <div class="display-2">Month Summary</div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-2 text-center">
+      <div class="p-3">
+        <div class="mt-2">
+          <form action="" id="myform" >
+            <label for="month">Enter a month</label>
+            <input type="month" width="100px" name="month" class="text-center" id="datepicker" placeholder="YYYY-MM" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <table class="table table-fixed caption-top">
+        <caption>
+          <%= if assigns[:month] do "Summary for #{summary_date(@month)}" end %>
+        </caption>
+        <thead>
+          <tr class="justify-content-center">
+            <th class="col-xl-4">Name</th>
+            <th class="col-xl-4">Username</th>
+            <th class="col-xl-4">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for user_summary <- @summaries do %>
+          <tr>
+            <td class="col-xl-4"><%= user_summary.user.name %></td>
+            <td class="col-xl-4"><%= user_summary.user.username %></td>
+            <td class="col-xl-4"><%= user_summary.summary %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
